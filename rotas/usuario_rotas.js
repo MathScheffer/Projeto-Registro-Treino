@@ -8,7 +8,10 @@ router.use(middleware_role.validarTokenAdm)
 router.post('/',controller.adicionar)
 router.get('/',controller.listar)
 router.get('/:id',controller.encontrarUsuario)
+
+router.put('/incrementar-rotina/:id',controller.incrementarRotina)
 router.put('/:id',controller.atualizarUsuario)
+
 router.delete('/:id',controller.excluirUsuario)
 
 

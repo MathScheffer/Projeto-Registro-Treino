@@ -108,3 +108,50 @@ exports.excluirUsuario = (req,res) => {
         res.status(500).json({erro: "Erro interno no servidor!"})
     }
 }
+
+exports.incrementarRotina = async(req,res) => {
+    try{
+        const id = req.params.id;
+        const body = req.body.rotina;
+
+        if(body){
+            const user = await Usuario.findOne({_id: id}).populate('rotina').exec();
+            const userRotina = user.rotina;
+            const res = userRotina.filter(r => r.dia)
+            res.send(user)
+/*             if(!user.rotina.includes(rotina)){
+                user.rotina.push(rotina);
+            }else{
+                res.status(422).json({message: "Rotina ja adicionada!"})
+                res.end()
+            }
+
+
+            Usuario.findOneAndUpdate({_id: id},{rotina:user.rotina},{new:true},(err,usuario) => {
+                if(err){
+                    const badRequest = new BadRequestErrors(JSON.parse(JSON.stringify(err.errors || err)))
+                    const unprocessableError = new UnprocessableEntityErrors(JSON.parse(JSON.stringify(err)))
+    
+                    if(Utils.validaJsonVazio(badRequest.getMessages()))
+                        res.status(400).json(badRequest.getMessages())
+                    else if(Utils.validaJsonVazio(unprocessableError.getMessages()))
+                        res.status(422).json(unprocessableError.getMessages())
+                    else
+                        res.status(500).json({erro: "Houve um problema ao atualizar usuario!"})
+    
+                }else if(usuario){
+                    console.log("atualizando")
+                    res.status(200).json({message: "Usuario atualizado com sucesso!", usuario: usuario})
+                }else{
+                    res.status(404).json({message: "Usuario nao encontrado!"})
+                }
+            })
+         */
+        }else{
+            res.status(400).json({message: "Necessario informar a rotina!"})
+        }
+        
+    }catch(err){
+        res.status(500).json({erro: "Erro interno no servidor!", message:err})
+    }
+}

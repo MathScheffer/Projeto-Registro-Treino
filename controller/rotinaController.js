@@ -3,20 +3,42 @@ const BadRequestErrors = require('./utils/badRequestErrors')
 const Utils = require('./utils/utils')
 const Constants = require('../constants/constants');
 
-exports.adicionar = (req,res) => {
-    const rotina = new Rotina(req.body);
-    rotina.save((err,Rotina) => {
-        if(err) {
-            const badRequest = new BadRequestErrors(JSON.parse(JSON.stringify(err.errors || err)))
-            
-            if(badRequest.getMessages())
-                res.status(400).json(badRequest.getMessages())
-            else
-                res.status(500).json({"Message":"Erro interno no servidor!"})
+exports.adicionar = async(req,res) => {
+    try{
+        const rotina = new Rotina(req.body);
+        const rotinas = await Rotina.find({usuario: rotina.usuario}).exec();
+
+        if(verificarCadastroRotina(rotina, rotinas)){
+            rotina.save((err,Rotina) => {
+                if(err) {
+                    const badRequest = new BadRequestErrors(JSON.parse(JSON.stringify(err.errors || err)))
+                    
+                    if(badRequest.getMessages())
+                        res.status(400).json(badRequest.getMessages())
+                    else
+                        res.status(500).json({"Message":"Erro interno no servidor!"})
+                }else{
+                    res.status(201).json(Rotina);
+                }
+            })
         }else{
-            res.status(201).json(Rotina);
+            res.status(422).json({message: `O usuario ja possui uma rotina no dia de ${rotina.dia}`})
         }
-    })
+    }catch{
+        res.status(500).json({message: "Erro interno no servidor!"})
+    }
+
+}
+
+const verificarCadastroRotina = (novaRotina, rotinasAntigas) => {
+    const dia = novaRotina.dia;
+    for(rotina of rotinasAntigas){
+        if(rotina.dia == dia){
+            return false
+        }
+    }
+
+    return true
 }
 
 exports.listar = (req,res) => {
@@ -151,6 +173,62 @@ exports.registrarExercicio = (req,res) => {
     }catch(error){
         res.status(500).json({erro: "Erro interno no servidor!"})
     }
+}
+
+exports.adicionarExercicio = async(req,res) => {
+    try{
+        const id = req.params.id;
+        const body = req.body;
+
+        if(body.nome && body.carga && body.repeticoes && body.series){
+            const exercicio = {
+                nome: body.nome,
+                carga: body.carga,
+                repeticoes: body.repeticoes,
+                series: body.series,
+                repeticoesFeitas: 0,
+                cargaAlcancada: 0
+            }
+            const rotina = await Rotina.findOne({_id: id}).exec();
+
+            if(rotina){
+                if(verificarCadastroExercicio(exercicio, rotina.exercicios)){
+                    rotina.exercicios.push(exercicio)
+                    /* Rotina.findByIdAndUpdate(id, rotina,{new:true},(err,rotina) => {
+                        if(err){
+                            res.status(500).json({erro: "Houve um problema ao atualizar rotina!"})
+                        }
+            
+                        if(rotina){
+                            res.status(200).json({message: "Rotina atualizada com sucesso!", rotina: rotina})
+                        }else{
+                            res.status(404).json({message: "Rotina nao encontrada!"})
+                        }
+                    }) */
+                }else{
+                    res.status(422).json({message: `Ja existe o exercicio ${exercicio.nome}!`})
+                }
+            }else{
+                res.status(404).json({message: "Rotina nao encontrada."})
+            }
+        }else{
+            res.status(400).json({message: "Verifique os parâmetros do exercicio."})
+        }
+    }catch{
+        res.status(500).json({message: "Erro interno no servidor!"})
+    }
+}
+
+verificarCadastroExercicio = (exercicio, exercicios) => {
+    const nome = exercicio.nome;
+    for(e of exercicios){
+        console.log(nome)
+        if(e.nome == nome){
+            return false
+        }
+    }
+
+    return true
 }
 
 exports.excluir = (req,res) => {

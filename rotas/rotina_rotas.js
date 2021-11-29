@@ -12,7 +12,8 @@ router.get('/',controller.listar);
 
 router.post('/',controller.adicionar);
 
-router.put('/exercicio/:id_exercicio',controller.atualizarExercicio)
+router.put('/exercicio/atualizar/:id_exercicio',controller.atualizarExercicio)
+router.put('/exercicio/adicionar/:id',controller.adicionarExercicio)
 router.put('/:id', controller.atualizar);
 
 router.delete('/:id', controller.excluir);
