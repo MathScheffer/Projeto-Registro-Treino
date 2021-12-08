@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const Usuario = require('../model/usuario');
+const Rotina = require('../model/rotina');
 const BadRequestErrors = require('./utils/badRequestErrors');
 const UnprocessableEntityErrors = require('./utils/unprocessableEntityErrors');
 const Utils = require('./utils/utils');
@@ -13,7 +14,6 @@ exports.adicionar =(req,res) => {
         
         user.save((err,User) => {
             if(err){
-                console.log(JSON.parse(JSON.stringify(err)))
                 const badRequest = new BadRequestErrors(JSON.parse(JSON.stringify(err.errors || err)))
                 const unprocessableError = new UnprocessableEntityErrors(JSON.parse(JSON.stringify(err)))
 
@@ -50,7 +50,7 @@ exports.listar = (req,res) => {
 
 exports.encontrarUsuario = (req,res) => {
     //try{
-        Usuario.findById(req.params.id, (err, User) => {
+        Usuario.findOne({_id: req.params.id}).populate('rotina').exec( function(err, User){
             if(err){
                 res.status(500).send("Erro interno no servidor!")
             }else{
@@ -81,7 +81,6 @@ exports.atualizarUsuario = (req,res) => {
                     res.status(500).json({erro: "Houve um problema ao atualizar usuario!"})
 
             }else if(usuario){
-                console.log("atualizando")
                 res.status(200).json({message: "Usuario atualizado com sucesso!", usuario: usuario})
             }else{
                 res.status(404).json({message: "Usuario nao encontrado!"})
@@ -112,21 +111,35 @@ exports.excluirUsuario = (req,res) => {
 exports.incrementarRotina = async(req,res) => {
     try{
         const id = req.params.id;
-        const body = req.body.rotina;
+        const rotinaBody = req.body.rotina;
 
-        if(body){
+        if(rotinaBody){
             const user = await Usuario.findOne({_id: id}).populate('rotina').exec();
-            const userRotina = user.rotina;
-            const res = userRotina.filter(r => r.dia)
-            res.send(user)
-/*             if(!user.rotina.includes(rotina)){
-                user.rotina.push(rotina);
+            const rotina = await Rotina.findOne({_id:rotinaBody});
+
+            if(!user || !Utils.validaJsonVazio(user)){
+                res.status(404).json({message: "usuario nao encontrado!"})
+                return ;
+            }else if(!rotina || !Utils.validaJsonVazio(rotina)){
+                res.status(404).json({message: "rotina nao encontrada!"})
+                return ;
+            }else if(!user.rotina.includes(rotina)){
+
+                const diaRotina = rotina.dia;
+
+                if(user.rotina.filter(r => r.dia == diaRotina).length == 0){
+                    user.rotina.push(rotina);
+                }else{
+                    res.status(422).json({message: "Usuario ja possui uma rotina neste dia!"})
+                    res.end();
+                    return ;
+                }
             }else{
                 res.status(422).json({message: "Rotina ja adicionada!"})
-                res.end()
+                return ;
             }
-
-
+ 
+            
             Usuario.findOneAndUpdate({_id: id},{rotina:user.rotina},{new:true},(err,usuario) => {
                 if(err){
                     const badRequest = new BadRequestErrors(JSON.parse(JSON.stringify(err.errors || err)))
@@ -140,13 +153,12 @@ exports.incrementarRotina = async(req,res) => {
                         res.status(500).json({erro: "Houve um problema ao atualizar usuario!"})
     
                 }else if(usuario){
-                    console.log("atualizando")
                     res.status(200).json({message: "Usuario atualizado com sucesso!", usuario: usuario})
                 }else{
                     res.status(404).json({message: "Usuario nao encontrado!"})
                 }
             })
-         */
+        
         }else{
             res.status(400).json({message: "Necessario informar a rotina!"})
         }

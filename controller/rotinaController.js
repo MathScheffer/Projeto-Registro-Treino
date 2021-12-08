@@ -60,11 +60,13 @@ exports.listar = (req,res) => {
 }
 
 exports.encontrarRotina = (req,res) => {
-    Rotina.findById(req.params.id, (err,Rotina) => {
+    Rotina.findById(req.params.id, (err,rotina) => {
         if(err){
             res.send(err)
+        }else if(rotina){
+            res.json(rotina)
         }else{
-            res.json(Rotina)
+            res.status(404).json({message: "Rotina nao encontrada!"})
         }
     })
 }
@@ -104,7 +106,7 @@ exports.atualizarExercicio = (req,res) => {
                 })
 
         }else if (!Utils.validaJsonVazio(body)){
-            res.json({Message:"Corpo da requisicao Vazio: Nenhum dado foi modificado!"})    
+            res.status(400).json({Message:"Corpo da requisicao Vazio: Nenhum dado foi modificado!"})    
 
         }else{
             const bodyFormatado = Utils.formatarObjetoInterno("exercicios",body);
@@ -146,7 +148,7 @@ exports.registrarExercicio = (req,res) => {
                 })
 
         }else if (!Utils.validaJsonVazio(body)){
-            res.json({Message:"Corpo da requisicao Vazio: Nenhum dado foi modificado!"})    
+            res.status(400).json({Message:"Corpo da requisicao Vazio: Nenhum dado foi modificado!"})    
 
         }else{
             const bodyFormatado = Utils.formatarObjetoInterno("exercicios",body);
@@ -178,23 +180,25 @@ exports.registrarExercicio = (req,res) => {
 exports.adicionarExercicio = async(req,res) => {
     try{
         const id = req.params.id;
-        const body = req.body;
+        const exercicio = req.body;
 
-        if(body.nome && body.carga && body.repeticoes && body.series){
-            const exercicio = {
-                nome: body.nome,
-                carga: body.carga,
-                repeticoes: body.repeticoes,
-                series: body.series,
-                repeticoesFeitas: 0,
-                cargaAlcancada: 0
-            }
-            const rotina = await Rotina.findOne({_id: id}).exec();
+        if(!Utils.validaParametrosValidos(exercicio, Constants.EXERCICIOS_PARAMS)){
+            res.status(400).json(
+                {
+                    erro:"Ha parametros que nao sao validos no corpo da requisicao!",
+                    parametros_validos: Constants.EXERCICIOS_PARAMS
+                })
 
+        }else if (!Utils.validaJsonVazio(exercicio)){
+            res.status(400).json({Message:"Corpo da requisicao Vazio: Nenhum dado foi modificado!"})    
+        }else{
+            const rotina = await Rotina.findOne({_id: id}).exec();  
+            
             if(rotina){
                 if(verificarCadastroExercicio(exercicio, rotina.exercicios)){
                     rotina.exercicios.push(exercicio)
-                    /* Rotina.findByIdAndUpdate(id, rotina,{new:true},(err,rotina) => {
+
+                    Rotina.findByIdAndUpdate(id, rotina,{new:true},(err,rotina) => {
                         if(err){
                             res.status(500).json({erro: "Houve um problema ao atualizar rotina!"})
                         }
@@ -204,25 +208,24 @@ exports.adicionarExercicio = async(req,res) => {
                         }else{
                             res.status(404).json({message: "Rotina nao encontrada!"})
                         }
-                    }) */
+                    })
                 }else{
                     res.status(422).json({message: `Ja existe o exercicio ${exercicio.nome}!`})
                 }
             }else{
                 res.status(404).json({message: "Rotina nao encontrada."})
             }
-        }else{
-            res.status(400).json({message: "Verifique os parâmetros do exercicio."})
         }
-    }catch{
-        res.status(500).json({message: "Erro interno no servidor!"})
+
+    }catch(err){
+        res.status(500).json({message: "Erro interno no servidor!", erro: err.message})
     }
 }
 
 verificarCadastroExercicio = (exercicio, exercicios) => {
     const nome = exercicio.nome;
+    
     for(e of exercicios){
-        console.log(nome)
         if(e.nome == nome){
             return false
         }

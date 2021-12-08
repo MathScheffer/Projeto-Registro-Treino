@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const validarPermissao = (token, permissao, callback) => {
 
     if(!constants.PERMISSIONS.includes(permissao.toUpperCase())){
-        console.log("teste")
         const error = {
             status: 400,
             message: "Necessario informar a Role"
@@ -21,7 +20,6 @@ const validarPermissao = (token, permissao, callback) => {
             callback(error,null)
         }else{
             const permissions = payload.role;
-            console.log(permissao)
             if(permissions == permissao && permissao != "DISABLED"){
                 callback(null,{
                     status:200,
@@ -47,12 +45,10 @@ exports.validarTokenAdm = (req,res,next) => {
             if(err){
                 res.status(err.status).json(err);
             }else{
-                console.log("vai dar next")
                 next();
             }
         })
     }catch(error){
-        console.log(error)
         res.status(500).json({erro: "Erro interno no servidor!"})
     }
 }
@@ -66,12 +62,10 @@ exports.validarTokenUsuarioDesabilitado = (req,res,next) => {
             if(err){
                 res.status(err.status).json(err);
             }else{
-                console.log("vai dar next")
                 next();
             }
         })
     }catch(error){
-        console.log(error)
         res.status(500).json({erro: "Erro interno no servidor!"})
     }
 }

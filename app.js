@@ -1,7 +1,9 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose')
 const port = 3000
+
 
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
@@ -25,8 +27,9 @@ mongoose.connect('mongodb://localhost/app_registro', {
   });
 mongoose.Promise = global.Promise;
 
+app.use(cors())
 app.use('/api/token', rotasToken)
-app.use(middleware.validarToken)
+//app.use(middleware.validarToken)
 app.use('/api/rotinas',rotasRotinas);
 app.use('/api/usuarios',usuarioRotas)
 
