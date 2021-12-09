@@ -1,0 +1,94 @@
+[{
+  "_id": {
+    "$oid": "619a6c88a82d4912e090ee46"
+  },
+  "rotina": [
+    {
+      "$oid": "61b1a36bf71f38360883cec4"
+    },
+    {
+      "$oid": "61b1a3b4f71f38360883ceea"
+    },
+    {
+      "$oid": "61b1a3f0f71f38360883cf10"
+    },
+    {
+      "$oid": "61b1a428f71f38360883cf36"
+    },
+    {
+      "$oid": "61b1a461f71f38360883cf5c"
+    }
+  ],
+  "nome": "Adm 1",
+  "senha": "$2b$10$LzxVt2tCPURBlSrRmDF0puaUGjbWWrpBFanMTwGHUS3u7bVOgFzAm",
+  "idade": 30,
+  "peso": 80,
+  "sexo": "Homem",
+  "role": "ADM"
+},{
+  "_id": {
+    "$oid": "619aaa311015b6393c03390e"
+  },
+  "rotina": [],
+  "nome": "Usuario Teste 1234",
+  "senha": "$2b$10$cRuj6b8RXQEIjw6CWHY00OhSlzv8HA0YVOcfwGytTp.dFivW9R5U6",
+  "idade": 30,
+  "peso": 80,
+  "sexo": "String",
+  "role": "adm"
+},{
+  "_id": {
+    "$oid": "619ac246adf0d01fe09116ba"
+  },
+  "rotina": [],
+  "nome": "Usuario Teste1",
+  "senha": "$2b$10$rM2Wn9gbanu8vYi3qbNhBuPXtz8uWqXigLtX3Rk4EjA7uCzkcXBs.",
+  "idade": 30,
+  "peso": 80,
+  "sexo": "String",
+  "role": "adm"
+},{
+  "_id": {
+    "$oid": "619aca1149dc172f7874c743"
+  },
+  "rotina": [],
+  "nome": "Usuario Teste 1278534",
+  "senha": "$2b$10$eABnVMrc57I.mbgQiZPbOeeV/FV/9MGGdCtlBtg08qCHcQuZbHcWq",
+  "idade": 30,
+  "peso": 80,
+  "sexo": "String",
+  "role": "adm"
+},{
+  "_id": {
+    "$oid": "619acab894f91f3a28f24e90"
+  },
+  "rotina": [],
+  "nome": "Usuario Comum",
+  "senha": "$2b$10$YQkpxuYq8qXfYd.8KhPLVeV7sAq7k/cGahmmvW5mztrO.5179hqNm",
+  "idade": 30,
+  "peso": 80,
+  "sexo": "String",
+  "role": "USER"
+},{
+  "_id": {
+    "$oid": "619acbfb7ead863294f20908"
+  },
+  "rotina": [],
+  "nome": "Usuario Desabilitado",
+  "senha": "$2b$10$G/dtwidgJp4/VRQyYma.ie6b0rxKjKJd7qTsmasvUrA7PB5RqdwBi",
+  "idade": 30,
+  "peso": 80,
+  "sexo": "String",
+  "role": "DISABLED"
+},{
+  "_id": {
+    "$oid": "61a94d89849688472c24573a"
+  },
+  "rotina": [],
+  "nome": "Usuario Comum 2",
+  "senha": "$2b$10$gUXHIQx6OWPao2A4Lkr3e.bCTZqnNu0F/E.0c/PJtwjCQmxEhZ4n6",
+  "idade": 30,
+  "peso": 80,
+  "sexo": "String",
+  "role": "USER"
+}]

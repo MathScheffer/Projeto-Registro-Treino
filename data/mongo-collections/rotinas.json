@@ -1,0 +1,260 @@
+[{
+  "_id": {
+    "$oid": "61b1a36bf71f38360883cec4"
+  },
+  "dia": "Segunda",
+  "exercicios": [
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a36bf71f38360883cec5"
+      },
+      "nome": "Rosca Direta",
+      "carga": 12,
+      "repeticoes": 10,
+      "series": 3
+    },
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a376f71f38360883ced1"
+      },
+      "nome": "Rosca Alternada",
+      "carga": 10,
+      "repeticoes": 10,
+      "series": 3
+    },
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a382f71f38360883ced8"
+      },
+      "nome": "Scott",
+      "carga": 12,
+      "repeticoes": 10,
+      "series": 3
+    },
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a399f71f38360883cee0"
+      },
+      "nome": "Rosca Punho Invertido",
+      "carga": 10,
+      "repeticoes": 10,
+      "series": 3
+    }
+  ],
+  "usuario": {
+    "$oid": "619a6c88a82d4912e090ee46"
+  }
+},{
+  "_id": {
+    "$oid": "61b1a3b4f71f38360883ceea"
+  },
+  "dia": "Terça",
+  "exercicios": [
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a3b4f71f38360883ceeb"
+      },
+      "nome": "Supino Inclinado",
+      "carga": 20,
+      "repeticoes": 10,
+      "series": 3
+    },
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a3c6f71f38360883cef7"
+      },
+      "nome": "Supino Reto",
+      "carga": 25,
+      "repeticoes": 10,
+      "series": 3
+    },
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a3cbf71f38360883cefe"
+      },
+      "nome": "Supino Declinado",
+      "carga": 25,
+      "repeticoes": 10,
+      "series": 3
+    },
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a3d5f71f38360883cf06"
+      },
+      "nome": "Voador",
+      "carga": 50,
+      "repeticoes": 10,
+      "series": 3
+    }
+  ],
+  "usuario": {
+    "$oid": "619a6c88a82d4912e090ee46"
+  }
+},{
+  "_id": {
+    "$oid": "61b1a3f0f71f38360883cf10"
+  },
+  "dia": "Quarta",
+  "exercicios": [
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a3f0f71f38360883cf11"
+      },
+      "nome": "Agachamento Livre",
+      "carga": 26,
+      "repeticoes": 10,
+      "series": 3
+    },
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a3faf71f38360883cf1d"
+      },
+      "nome": "LegPress 45°",
+      "carga": 80,
+      "repeticoes": 10,
+      "series": 3
+    },
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a400f71f38360883cf24"
+      },
+      "nome": "LegPress 90°",
+      "carga": 80,
+      "repeticoes": 10,
+      "series": 3
+    },
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a407f71f38360883cf2c"
+      },
+      "nome": "Panturrilha",
+      "carga": 80,
+      "repeticoes": 10,
+      "series": 3
+    }
+  ],
+  "usuario": {
+    "$oid": "619a6c88a82d4912e090ee46"
+  }
+},{
+  "_id": {
+    "$oid": "61b1a428f71f38360883cf36"
+  },
+  "dia": "Quinta",
+  "exercicios": [
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a428f71f38360883cf37"
+      },
+      "nome": "Graviton",
+      "carga": 5,
+      "repeticoes": 10,
+      "series": 3
+    },
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a435f71f38360883cf43"
+      },
+      "nome": "Remada com Apoio",
+      "carga": 30,
+      "repeticoes": 10,
+      "series": 3
+    },
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a440f71f38360883cf4a"
+      },
+      "nome": "Remada curvada",
+      "carga": 20,
+      "repeticoes": 10,
+      "series": 3
+    },
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a44ff71f38360883cf52"
+      },
+      "nome": "Serrote",
+      "carga": 12,
+      "repeticoes": 10,
+      "series": 3
+    }
+  ],
+  "usuario": {
+    "$oid": "619a6c88a82d4912e090ee46"
+  }
+},{
+  "_id": {
+    "$oid": "61b1a461f71f38360883cf5c"
+  },
+  "dia": "Sexta",
+  "exercicios": [
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a461f71f38360883cf5d"
+      },
+      "nome": "Tríceps na Corda",
+      "carga": 35,
+      "repeticoes": 10,
+      "series": 3
+    },
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a466f71f38360883cf69"
+      },
+      "nome": "Tríceps na Roldana",
+      "carga": 35,
+      "repeticoes": 10,
+      "series": 3
+    },
+    {
+      "cargaAlcancada": 0,
+      "repeticoesFeitas": 0,
+      "_id": {
+        "$oid": "61b1a475f71f38360883cf70"
+      },
+      "nome": "Triceps na Testa",
+      "carga": 12,
+      "repeticoes": 10,
+      "series": 3
+    }
+  ],
+  "usuario": {
+    "$oid": "619a6c88a82d4912e090ee46"
+  }
+}]
