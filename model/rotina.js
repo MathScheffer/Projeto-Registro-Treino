@@ -7,6 +7,7 @@ const RotinaSchema = new Schema({
         nome: {type:String, required: [true,"necessario informar o nome do exercicio!"]},
         carga: {type:Number, required: [true,"necessario informar a carga!"]},
         repeticoes: {type:Number, required: [true,"necessario informar a quantidade de repeticoes!"]},
+        series: {type:Number, required: [true,"necessario informar a quantidade de series!"]},
         cargaAlcancada:{
             type: Number,
             default:0
