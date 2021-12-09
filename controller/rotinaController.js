@@ -92,6 +92,21 @@ exports.atualizar = (req,res) => {
     }
 }
 
+exports.encontrarExercicio = async(req,res) => {
+    try{    
+        const id = req.params.id;
+        const rotina = await Rotina.findOne({"exercicios._id":id}).exec();
+
+        if(rotina){
+            res.send(rotina.exercicios.filter(e => e._id == id))
+        }else{
+            res.status(404).json({message: "Exercicio nao encontrado!"})
+            console.log(rotina)
+        }
+    }catch(err){
+        res.status(500).json({message: "Erro interno no servidor.", error: err.message})
+    }
+}
 
 exports.atualizarExercicio = (req,res) => {
     try{
@@ -152,7 +167,6 @@ exports.registrarExercicio = (req,res) => {
 
         }else{
             const bodyFormatado = Utils.formatarObjetoInterno("exercicios",body);
-
             Rotina.findOneAndUpdate({'exercicios._id':id},
             {$set:bodyFormatado},
             {new:true},(err,exercicio) => {
@@ -204,7 +218,7 @@ exports.adicionarExercicio = async(req,res) => {
                         }
             
                         if(rotina){
-                            res.status(200).json({message: "Rotina atualizada com sucesso!", rotina: rotina})
+                            res.status(200).json({message: "Rotina atualizada com sucesso!", rotina: rotina, novo_exercicio: exercicio})
                         }else{
                             res.status(404).json({message: "Rotina nao encontrada!"})
                         }
@@ -241,15 +255,35 @@ exports.excluir = (req,res) => {
         Rotina.findOneAndDelete({_id:id}, (err, rotinaDeletada) => {
             if(err){
                 res.status(500).json({erro: "Erro interno no servidor!"})
-            }
 
-            if(rotinaDeletada){
+            }else if(rotinaDeletada){
                 res.json({message: "Rotina excluida com sucesso!"})
+
             }else{
                 res.status(404).send("Rotina nao encontrada!")
             }
         })
     }catch{
         res.status(500).json({erro: "Erro interno no servidor!"})
+    }
+}
+
+exports.excluirExercicio = (req,res) => {
+    try{
+        const id = req.params.id;
+
+        Rotina.updateOne({'exercicios._id':id}, {
+            $pull:{ exercicios:{_id:id}}}, 
+            (err, rotina) => {
+                if(err){
+                    res.status(500).send({message: "Erro interno no servidor!", error: err.message})
+                }else if(rotina){
+                    res.json(rotina)
+                }else{
+                    res.status(404).json({message: "Rotina nao encontrada!"})
+                }
+            })
+    }catch(err){
+        res.status(500).json({message: "Erro interno no servidor!", error: err.message})
     }
 }

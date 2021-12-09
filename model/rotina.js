@@ -16,11 +16,6 @@ const RotinaSchema = new Schema({
             default: 0
         }
     }],
-    usuario: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Usuario",
-        required:[true,"necessario informar o id do usuario!"]
-      },
     //exercicios:[{ type: Schema.Types.ObjectId, ref: 'Exercicio' }]
 },{
     versionKey:false
