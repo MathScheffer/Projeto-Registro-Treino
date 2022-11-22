@@ -2,6 +2,7 @@ const Rotina = require('../model/rotina');
 const BadRequestErrors = require('./utils/badRequestErrors')
 const Utils = require('./utils/utils')
 const Constants = require('../constants/constants');
+const { validaCamposObrigatorios } = require('./utils/utils');
 
 exports.adicionar = async(req,res) => {
     try{
@@ -31,9 +32,9 @@ exports.adicionar = async(req,res) => {
 }
 
 const verificarCadastroRotina = (novaRotina, rotinasAntigas) => {
-    const dia = novaRotina.dia;
+    const dia = novaRotina.dia.toLowerCase();
     for(rotina of rotinasAntigas){
-        if(rotina.dia == dia){
+        if(rotina.dia.toLowerCase() == dia){
             return false
         }
     }
@@ -128,7 +129,7 @@ exports.atualizarExercicio = (req,res) => {
 
             Rotina.findOneAndUpdate({'exercicios._id':id},
             {$set:bodyFormatado},
-            {new:true},(err,exercicio) => {
+            {new:true},(err, rotina) => {
                 if(err){
                     const badRequest = new BadRequestErrors(JSON.parse(JSON.stringify(err.errors || err)))
                     
@@ -137,8 +138,8 @@ exports.atualizarExercicio = (req,res) => {
                     else
                         res.status(500).json({erro: "Houve um problema ao atualizar exercicio!"})
                 }
-                else if(exercicio){
-                    res.status(200).json({message: "Exercicio da rotina atualizado com sucesso!", exercicio: exercicio})
+                else if(rotina && rotina.exercicios){
+                    res.status(200).json({message: "Exercicio da rotina atualizado com sucesso!", exercicio: rotina.exercicios.filter(e => e._id == id)[0]})
                 }else{
                     res.status(404).json({message: "Exericicio nao encontrado!"})
                 }
@@ -209,6 +210,56 @@ exports.adicionarExercicio = async(req,res) => {
             const rotina = await Rotina.findOne({_id: id}).exec();  
             
             if(rotina){
+                let haCamposFaltando = Utils.haCamposObrigatoriosFaltando(exercicio,["nome","series","repeticoes"]);
+                if(haCamposFaltando){
+                    res.status(400).json({message: "Ha parametros faltando: " + haCamposFaltando})
+                }
+                
+                else if(verificarCadastroExercicio(exercicio, rotina.exercicios)){
+                    rotina.exercicios.push(exercicio)
+
+                    Rotina.findByIdAndUpdate(id, rotina,{new:true},(err,rotina) => {
+                        if(err){
+                            res.status(500).json({erro: "Houve um problema ao atualizar rotina!"})
+                        }
+            
+                        if(rotina){
+                            res.status(200).json({message: "Rotina atualizada com sucesso!", rotina: rotina, novo_exercicio: exercicio})
+                        }else{
+                            res.status(404).json({message: "Rotina nao encontrada!"})
+                        }
+                    })
+                }else{
+                    res.status(422).json({message: `Ja existe o exercicio "${exercicio.nome}"!`})
+                }
+            }else{
+                res.status(404).json({message: "Rotina nao encontrada."})
+            }
+        }
+
+    }catch(err){
+        res.status(500).json({message: "Erro interno no servidor!", erro: err.message})
+    }
+}
+
+/* exports.adicionarExercicios = async(req,res) => {
+    try{
+        const id = req.params.id;
+        const exercicio = req.body;
+
+        if(!Utils.validaParametrosValidos(exercicio, Constants.EXERCICIOS_PARAMS)){
+            res.status(400).json(
+                {
+                    erro:"Ha parametros que nao sao validos no corpo da requisicao!",
+                    parametros_validos: Constants.EXERCICIOS_PARAMS
+                })
+
+        }else if (!Utils.validaJsonVazio(exercicio)){
+            res.status(400).json({Message:"Corpo da requisicao Vazio: Nenhum dado foi modificado!"})    
+        }else{
+            const rotina = await Rotina.findOne({_id: id}).exec();  
+            
+            if(rotina){
                 if(verificarCadastroExercicio(exercicio, rotina.exercicios)){
                     rotina.exercicios.push(exercicio)
 
@@ -234,7 +285,7 @@ exports.adicionarExercicio = async(req,res) => {
     }catch(err){
         res.status(500).json({message: "Erro interno no servidor!", erro: err.message})
     }
-}
+} */
 
 verificarCadastroExercicio = (exercicio, exercicios) => {
     const nome = exercicio.nome;

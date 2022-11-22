@@ -2,18 +2,19 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 const RotinaSchema = new Schema({
-    dia:String,
+    dia:{type:String, 
+        required: [true,"necessario informar o nome da rotina!"]},
     exercicios: [{
         nome: {type:String, required: [true,"necessario informar o nome do exercicio!"]},
-        carga: {type:Number, required: [true,"necessario informar a carga!"]},
-        repeticoes: {type:Number, required: [true,"necessario informar a quantidade de repeticoes!"]},
-        series: {type:Number, required: [true,"necessario informar a quantidade de series!"]},
+        carga: {type:Number, default:0},
+        repeticoes: {type:String, required: [true,"necessario informar a quantidade de repeticoes!"]},
+        series: {type:String, required: [true,"necessario informar a quantidade de series!"]},
         cargaAlcancada:{
             type: Number,
             default:0
-    },
+         },
         repeticoesFeitas: {
-            type: Number,
+            type: String,
             default: 0
         }
     }],

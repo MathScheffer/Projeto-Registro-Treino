@@ -62,7 +62,7 @@ class BadRequestErrors{
         }
         
         if(message.includes("Cast to [ObjectId]")){
-            
+            console.log(message)
             mensagemFinal = `parametro "${path}" necessita ser do tipo ObjectId!`
         }
 

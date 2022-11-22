@@ -25,6 +25,30 @@ class Utils{
         return true;
     }
 
+    static haCamposObrigatoriosFaltando(json, arrayCamposObrigatorios){
+        console.log(`Exercicio: ${json}`)
+        let arr = []
+        let arrError = []
+
+        for(let key in json){
+            console.log(key)
+            if(arrayCamposObrigatorios.includes(key)){
+                
+               arr.push(key)
+            }
+        }
+
+        if(arr.length === arrayCamposObrigatorios.length){
+            return false
+        }else{
+            for (var a of arrayCamposObrigatorios){
+                if(!arr.includes(a)){
+                    arrError.push(a)
+                }
+            }
+            return arrError.join(", ")
+        }
+    }
     //Formata um "body" para que seja possível fazer uma busca interna no objeto para atualizá-lo
     static formatarObjetoInterno(nomeObjetoInterno, objetoInterno){
         const novoObjeto = {}
