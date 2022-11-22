@@ -239,7 +239,7 @@ exports.decrementarRotina = async(req,res) => {
                         res.status(500).json({message: "Houve um problema ao atualizar usuario!",erro:err})
     
                 }else if(usuario){
-                    res.status(200).json({message: "Rortina removida com sucesso!", usuario: usuario})
+                    res.status(200).json({message: "Rotina removida com sucesso!", usuario: usuario})
                 }else{
                     res.status(404).json({message: "Usuario nao encontrado!"})
                 }
