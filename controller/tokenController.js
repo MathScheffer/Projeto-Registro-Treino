@@ -13,7 +13,6 @@ exports.gerarToken = (req,res) => {
                 if(err){
                     res.status(500).json({error: "Erro interno no servidor!", message: err})
                 }
-
                 if(user && bcrypt.compareSync(senha, user.senha)){
                     const token = Jwt.sign({id: user.id, role: user.role},"encryptor",{expiresIn:"1h"} )
                     res.json({token:token, expires_in: "1h"})
@@ -22,7 +21,7 @@ exports.gerarToken = (req,res) => {
                 }
             })
         }else{
-            res.status(400).json({erro:"Corpo da requisicao invalido!"})
+            res.status(400).json({erro:"Necessario enviar campos usuario e senha!"})
         }
     }catch{
         res.status(500).send("Erro interno no servidor.")
