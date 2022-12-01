@@ -6,7 +6,7 @@ const validarPermissao = (token, permissao, callback) => {
     if(!constants.PERMISSIONS.includes(permissao.toUpperCase())){
         const error = {
             status: 400,
-            message: "Necessario informar a Role"
+            erro: "Necessario informar a Role"
         }
         callback(error,null);
     }
@@ -15,7 +15,7 @@ const validarPermissao = (token, permissao, callback) => {
         if(err){
             const error = {
                 status:403,
-                message:"Token invalido"
+                erro:"Token invalido!"
             }
             callback(error,null)
         }else{
@@ -23,12 +23,12 @@ const validarPermissao = (token, permissao, callback) => {
             if(permissions == permissao && permissao != "DISABLED"){
                 callback(null,{
                     status:200,
-                    message:"Permissao concedida!"
+                    erro:"Permissao concedida!"
                  })
             }else{
                 const error = {
                     status:401,
-                    message:"Permissao nao concedida!"
+                    erro:"Permissao nao concedida!"
                  }
                 callback(error,null)  
             }

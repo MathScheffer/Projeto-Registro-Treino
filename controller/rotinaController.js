@@ -329,7 +329,12 @@ exports.excluirExercicio = (req,res) => {
                 if(err){
                     res.status(500).send({message: "Erro interno no servidor!", error: err.message})
                 }else if(rotina){
-                    res.json(rotina)
+                    if(rotina.n && rotina.nModified && rotina.ok){
+                        res.json({message: 'Exercicio excluido com sucesso!'})
+                    }else{
+                        res.json({message: 'Exercicio ja foi excluido ou nao esta mais na base de dados.'})
+                    }
+                    
                 }else{
                     res.status(404).json({message: "Rotina nao encontrada!"})
                 }

@@ -15,7 +15,7 @@ const usuarioRotas = require('./rotas/usuario_rotas');
 const middleware = require('./middleware/auth');
 
 //Configuração do Mongoose
-mongoose.connect('mongodb://localhost/app_registro', {
+mongoose.connect('mongodb://localhost/easy_training_log', {
     useNewUrlParser: true, 
     useUnifiedTopology: true,
     useFindAndModify: false
@@ -29,7 +29,7 @@ mongoose.Promise = global.Promise;
 
 app.use(cors())
 app.use('/api/token', rotasToken)
-//app.use(middleware.validarToken)
+app.use(middleware.validarToken)
 app.use('/api/rotinas',rotasRotinas);
 app.use('/api/usuarios',usuarioRotas)
 
